@@ -2,7 +2,6 @@ package com.belhard.balash.bookstore.data.dao.impl;
 
 import com.belhard.balash.bookstore.data.dao.BookDao;
 
-import com.belhard.balash.bookstore.data.connection.DBConnection;
 import com.belhard.balash.bookstore.data.entity.Book;
 
 import javax.swing.plaf.nimbus.State;

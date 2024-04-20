@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c883e06-41d3-4169-bf4e-3626023c3d24" name="Changes" comment="" />
+    <list default="true" id="5c883e06-41d3-4169-bf4e-3626023c3d24" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
