@@ -2,6 +2,7 @@ package com.belhard.balash.bookstore.service;
 
 import com.belhard.balash.bookstore.service.dto.BookDto;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface BookService {
@@ -21,5 +22,7 @@ public interface BookService {
     boolean delete(long id);
 
     long getcountAll();
+
+    BigDecimal getCostByAuthor(String author);
 
 }

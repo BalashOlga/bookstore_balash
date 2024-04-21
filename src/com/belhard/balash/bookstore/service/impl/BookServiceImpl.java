@@ -6,6 +6,7 @@ import com.belhard.balash.bookstore.data.dao.impl.BookDaoImpl;
 import com.belhard.balash.bookstore.data.entity.Book;
 import com.belhard.balash.bookstore.service.dto.BookDto;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class BookServiceImpl implements BookService {
@@ -91,5 +92,23 @@ public class BookServiceImpl implements BookService {
     @Override
     public long getcountAll() {
         return bookDao.countAll();
+    }
+
+    @Override
+    public BigDecimal getCostByAuthor(String author) {
+        List<Book> bookList = bookDao.findByAuthor(author);
+
+        if (bookList.isEmpty()){
+            return null;
+        } else {
+            BigDecimal i = BigDecimal.valueOf(0);
+            for (Book book : bookList) {
+                if (book.getCost() != null) {
+                    i = i.add(book.getCost());
+                }
+            }
+            return i;
+        }
+
     }
 }
