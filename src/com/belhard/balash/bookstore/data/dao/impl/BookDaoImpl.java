@@ -226,8 +226,8 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
-    @Override
-    public void printTableInfo() {
-        return null;
-    }
+//    @Override
+//    public void printTableInfo() {
+//        return null;
+//    }
 }
