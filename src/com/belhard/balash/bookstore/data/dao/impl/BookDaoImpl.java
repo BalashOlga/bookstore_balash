@@ -1,26 +1,23 @@
 package com.belhard.balash.bookstore.data.dao.impl;
 
 import com.belhard.balash.bookstore.data.dao.BookDao;
-
 import com.belhard.balash.bookstore.data.entity.Book;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Long.getLong;
-import static java.time.temporal.TemporalAdjusters.next;
-
 public class BookDaoImpl implements BookDao {
+// все sout здесь для удобства поиска ошибок и чтобы в Main меньше выводов было, понятно, что они здесь лишние
+//  когда я Sql писала в неколько строк компиллятор был недоволен:org.postgrsql.util.PLSQLException: ОШИБКА: ошибка синтаксиса...
+//  ситуацию спасло только написани в одну строку ((((
 
-    // все sout здесь для удобства поиска ошибок и чтобы в Main меньше выводов было, понятно, что они здесь лишние
-// где лучше проверить чтобы параметр value в методе ниже были не null ?
-// или лучше вообще запретить сюда ходить с null, как лучше?
+
+// где лучше проверить чтобы параметр value в методе getResultSet(String sql, String value)  был не null ?
+// нужно запретить сюда ходить с null? или исключения достаточно?
 
 
     private ResultSet getResultSet(String sql, String value) throws SQLException {
-
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
 
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -32,11 +29,9 @@ public class BookDaoImpl implements BookDao {
             e.printStackTrace();
             throw new RuntimeException(" BookDaoImpl:private ResultSet getStatement(String sql, String value) ");
         }
-
     }
 
     private ResultSet getResultSet(String sql, long value) throws SQLException {
-
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
 
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -52,9 +47,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book findById(long id) {
-
         try {
-
             ResultSet books = getResultSet("SELECT id, author, isbn, year, cost FROM books WHERE id = ?", id);
 
             Book book = new Book();
@@ -67,14 +60,12 @@ public class BookDaoImpl implements BookDao {
                 book.setCost(books.getBigDecimal("cost"));
                 System.out.println(book);
             }
-
             return book;
 
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("BookDaoImpl: public Book findById(long id)");
         }
-
     }
 
     @Override
@@ -92,7 +83,6 @@ public class BookDaoImpl implements BookDao {
                 book.setCost(books.getBigDecimal("cost"));
                 System.out.println(book);
             }
-
             return book;
 
         } catch (Exception e) {
@@ -120,9 +110,7 @@ public class BookDaoImpl implements BookDao {
                 listBook.add(book);
 
                 System.out.println(book);
-
             }
-
             return listBook;
 
         } catch (Exception e) {
@@ -140,7 +128,6 @@ public class BookDaoImpl implements BookDao {
             List<Book> listBook = new ArrayList<>();
 
             while (books.next()) {
-
                 Book book = new Book();
                 book.setId(books.getLong("id"));
                 book.setAuthor(books.getString("author"));
@@ -151,16 +138,13 @@ public class BookDaoImpl implements BookDao {
                 listBook.add(book);
 
                 System.out.println(book);
-
             }
-
             return listBook;
 
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("BookDaoImpl: public List<Book> findByAuthor(String author)");
         }
-
     }
 
     @Override
@@ -184,17 +168,14 @@ public class BookDaoImpl implements BookDao {
                 return new Book(); // говорило, что нет return, пришлось добавлять
             }
 
-
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("BookDaoImpl: public boolean delete(long id)");
         }
-
     }
 
     @Override
     public Book update(Book book) {
-
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
 
             PreparedStatement statement = connection.prepareStatement("UPDATE books SET author = ?, isbn = ?, year = ?,  cost = ? WHERE id = ?; commit;");
@@ -212,12 +193,10 @@ public class BookDaoImpl implements BookDao {
             e.printStackTrace();
             throw new RuntimeException("BookDaoImpl: public boolean delete(long id)");
         }
-
     }
 
     @Override
     public boolean delete(long id) {
-
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
 
         PreparedStatement statement = connection.prepareStatement("DELETE FROM books WHERE id = ?");
@@ -229,12 +208,10 @@ public class BookDaoImpl implements BookDao {
             e.printStackTrace();
             throw new RuntimeException("BookDaoImpl: public boolean delete(long id)");
         }
-
     }
 
     @Override
     public long countAll() {
-
         try {
             ResultSet books = getResultSet("SELECT count(*) FROM books WHERE 1 = ?;", 1);
 
@@ -247,11 +224,10 @@ public class BookDaoImpl implements BookDao {
             e.printStackTrace();
             throw new RuntimeException("BookDaoImpl: public long countAll()");
         }
-
     }
 
     @Override
     public void printTableInfo() {
-
+        return null;
     }
 }

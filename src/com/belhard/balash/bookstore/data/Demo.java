@@ -49,9 +49,8 @@ public class Demo {
         bookDao.update(book1);
 
         System.out.println("create");
-        Book book2 = new Book(null,"dhfsgh", "978-0-444457-57-2",2023,null);
+        Book book2 = new Book(null,"dhfsgh", "978-0-44457-57-2",2023,null);
         bookDao.create(book2);
 
     }
-
 }
