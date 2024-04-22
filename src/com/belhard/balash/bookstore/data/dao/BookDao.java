@@ -25,7 +25,9 @@ public interface BookDao {
 
     long countAll();
 
-    void printTableInfo();
+    void createTable();
+
+//    void printTableInfo();
 
 
 }

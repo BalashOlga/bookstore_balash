@@ -4,113 +4,91 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="5c883e06-41d3-4169-bf4e-3626023c3d24" name="Changes" comment="" />
-=======
-    <list default="true" id="5c883e06-41d3-4169-bf4e-3626023c3d24" name="Changes" comment="">
+    <list default="true" id="4e9ccc0f-cc0c-4c44-934c-5d31d2bb9c9a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/Demo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/controller/Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/controller/Demo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/BookDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/impl/BookServiceImpl.java" afterDir="false" />
     </list>
->>>>>>> bd2370d86944c1ae7ee9c2c5647fc6ed4a768536
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-<<<<<<< HEAD
-  <component name="ProjectId" id="2fKHWPqHtGcGcvy2Zqnv8h4zDqz" />
-  <component name="TaskManager">
-    <servers />
-  </component>
-=======
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Interface" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="master" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "BalashOlga"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;BalashOlga&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/BalashOlga/bookstore_balash.git",
-    "accountId": "985b4bab-b647-4eaf-abce-b7aa64418d41"
-  }
-}]]></component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="2fKHWPqHtGcGcvy2Zqnv8h4zDqz" />
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/BalashOlga/bookstore_balash.git&quot;,
+    &quot;accountId&quot;: &quot;985b4bab-b647-4eaf-abce-b7aa64418d41&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2fPBqPi0ka0OmUtupqExFh0nxRd" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Demo.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;module1__dao&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;11&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/JavaProjects/bookstore_balash&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Demo.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "module2__service",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/91757/IdeaProjects/Connection"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.belhard.balash.bookstore.data.entity" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.belhard.balash.bookstore.service.dto" />
-    </key>
-  </component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5c883e06-41d3-4169-bf4e-3626023c3d24" name="Changes" comment="" />
-      <created>1713546084418</created>
+      <changelist id="4e9ccc0f-cc0c-4c44-934c-5d31d2bb9c9a" name="Changes" comment="" />
+      <created>1713693027260</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1713546084418</updated>
+      <updated>1713693027260</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
-          <url>jar://$USER_HOME$/.jdks/openjdk-22.0.1/lib/src.zip!/java.sql/java/sql/PreparedStatement.java</url>
-          <line>96</line>
-          <properties class="java.sql.PreparedStatement" method="executeUpdate">
+          <url>file://$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java</url>
+          <line>136</line>
+          <properties class="com.belhard.balash.bookstore.data.dao.impl.BookDaoImpl" method="findByAuthor">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="18" />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java</url>
+          <line>193</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
->>>>>>> bd2370d86944c1ae7ee9c2c5647fc6ed4a768536
 </project>
