@@ -17,13 +17,13 @@ public class BookDaoImpl implements BookDao {
 // нужно запретить сюда ходить с null? или исключения достаточно?
 
 
-    private ResultSet getResultSet(String sql, String value) throws SQLException {
+    private ResultSet getResultSet(String sql, String value) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
 
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString (1, value);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString (1, value);
 
-            return statement.executeQuery();
+            return preparedStatement.executeQuery();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -31,19 +31,33 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
-    private ResultSet getResultSet(String sql, long value) throws SQLException {
+    private ResultSet getResultSet(String sql, long value)  {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
 
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setLong(1, value);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, value);
 
-            return statement.executeQuery();
+            return preparedStatement.executeQuery();
 
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("BookDaoImpl: ");
         }
     }
+
+    public void createTable(){
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
+
+        Statement statement = connection.createStatement();
+        statement.executeUpdate("CREATE TABLE IF NOT EXISTS books( id SERIAL PRIMARY KEY, author VARCHAR(100), isbn VARCHAR(50) NOT NULL UNIQUE, year INT4, cost DECIMAL(24,2));");
+        statement.executeUpdate("CREATE TABLE IF NOT EXISTS authors( id SERIAL PRIMARY KEY, author VARCHAR(100));");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(" BookDaoImpl:private ResultSet getStatement(String sql, String value) ");
+        }
+    }
+
 
     @Override
     public Book findById(long id) {
@@ -85,7 +99,7 @@ public class BookDaoImpl implements BookDao {
             }
             return book;
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("BookDaoImpl: public Book findByIsbn(String isbn)");
         }
@@ -150,6 +164,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book create(Book book) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
+
 
             PreparedStatement statement = connection.prepareStatement("INSERT INTO books (author, isbn, year,  cost)  VALUES (?, ?,  ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, book.getAutor());
@@ -226,8 +241,8 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
-    @Override
-    public void printTableInfo() {
-        return null;
-    }
+//    @Override
+//    public void printTableInfo() {
+//        return null;
+//    }
 }
