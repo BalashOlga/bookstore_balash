@@ -30,13 +30,14 @@ public class Demo {
             stroka.nextLine();
 
             BookService bookService = new BookServiceImpl();
+            bookService.createTable();
 
 //       как правильно делать в случае если книги по условию не найдены? null же не правильно возвращать? нужен объект?
 
             switch (action) {
                 case 1:  {
                     System.out.println("findById");
-                    if (bookService.getById(35).getId() == null) {
+                    if (bookService.getById(39).getId() == null) {
                         System.out.println("книга не найдена");
                     }
                     break;
@@ -85,7 +86,9 @@ public class Demo {
                 case 7: {
                     System.out.println("update");
                     BookDto book1 = new BookDto(36L, "dhfsgh", "978-0-444556-57-2", 2023, null);
-                    bookService.update(book1);
+                    if(bookService.update(book1).getId() == null){
+                        System.out.println("книга не была обновлена");
+                    }
                     break;
                 }
 

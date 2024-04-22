@@ -109,6 +109,10 @@ public class BookServiceImpl implements BookService {
             }
             return i;
         }
+    }
 
+    @Override
+    public void createTable() {
+        bookDao.createTable();
     }
 }

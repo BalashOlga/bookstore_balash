@@ -25,4 +25,6 @@ public interface BookService {
 
     BigDecimal getCostByAuthor(String author);
 
+    void createTable();
+
 }
