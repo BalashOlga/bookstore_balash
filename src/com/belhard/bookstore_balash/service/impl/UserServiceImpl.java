@@ -105,4 +105,15 @@ public class UserServiceImpl implements UserService {
     public long getcountAll() {
         return userDao.countAll();
     }
+
+    @Override
+    public UserDto login(String login, String password) {
+        UserDto userDto = toDto(userDao.findByLogin(login));
+
+        if (password.equals(userDto.getPassword())) {
+            return userDto;
+        } else {
+            return new UserDto();
+        }
+    }
 }

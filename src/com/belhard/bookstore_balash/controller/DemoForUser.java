@@ -20,7 +20,8 @@ public class DemoForUser {
         System.out.println("7 - update user");
         System.out.println("8 - create user");
         System.out.println("9 - count user");
-        System.out.println("10 - exit");
+        System.out.println("10 - find by login&password");
+        System.out.println("11 - exit");
 
         do {
             System.out.println();
@@ -104,6 +105,17 @@ public class DemoForUser {
                 }
 
                 case 10: {
+                    System.out.println("login");
+                    UserDto userDto = userService.login("user16", "977-0-783456-47-2");
+                    if (userDto.getId() == null) {
+                        System.out.println("The user was not found");
+                    } else {
+                        System.out.println(userDto);
+                    }
+                    break;
+                }
+
+                case 11: {
                     System.out.print("Completing the program");
                     break;
                 }

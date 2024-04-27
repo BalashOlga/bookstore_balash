@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e9ccc0f-cc0c-4c44-934c-5d31d2bb9c9a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/controller/Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/controller/Demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/data/dao/BookDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/data/dao/impl/BookDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/entity/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/data/entity/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/service/BookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/dto/BookDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/service/dto/BookDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/service/impl/BookServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/controller/DemoForUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/controller/DemoForUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/service/impl/UserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
