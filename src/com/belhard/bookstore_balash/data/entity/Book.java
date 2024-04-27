@@ -1,4 +1,4 @@
-package com.belhard.balash.bookstore.data.entity;
+package com.belhard.bookstore_balash.data.entity;
 
 import java.math.BigDecimal;
 
@@ -10,7 +10,6 @@ public class Book {
     private BigDecimal cost;
 
     public Book(){
-
     };
 
     public Book(Long id, String autor, String isbn, Integer year, BigDecimal cost) {

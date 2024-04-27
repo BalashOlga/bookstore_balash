@@ -1,27 +1,31 @@
-package com.belhard.balash.bookstore.data.dao.impl;
+package com.belhard.bookstore_balash.data.dao.impl;
 
-import com.belhard.balash.bookstore.data.dao.BookDao;
-import com.belhard.balash.bookstore.data.entity.Book;
+import com.belhard.bookstore_balash.data.dao.BookDao;
+import com.belhard.bookstore_balash.data.entity.Book;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookDaoImpl implements BookDao {
-// все sout здесь для удобства поиска ошибок и чтобы в Main меньше выводов было, понятно, что они здесь лишние
-//  когда я Sql писала в неколько строк компиллятор был недоволен:org.postgrsql.util.PLSQLException: ОШИБКА: ошибка синтаксиса...
-//  ситуацию спасло только написани в одну строку ((((
 
-
-// где лучше проверить чтобы параметр value в методе getResultSet(String sql, String value)  был не null ?
-// нужно запретить сюда ходить с null? или исключения достаточно?
-
+    public static final String URL = "jdbc:postgresql://localhost:5432/bookstore_bh";
+    public static final String USER = "postgres";
+    public static final String PASSWOORD = "123";
+    private static final String FIND_BY_ID = "SELECT id, author, isbn, year, cost FROM books WHERE id = ?";
+    private static final String FIND_BY_ISBN = "SELECT id, author, isbn, year, cost FROM books WHERE isbn = ?";
+    private static final String FIND_BY_AUTHOR = "SELECT id, author, isbn, year, cost FROM books WHERE author = ?";
+    private static final String FIND_ALL = "SELECT id, author, isbn, year, cost FROM books WHERE 1 = ?";
+    public static final String CREATE = "INSERT INTO books (author, isbn, year,  cost)  VALUES (?, ?, ?, ?)";
+    public static final String UPDATE = "UPDATE books SET author = ?, isbn = ?, year = ?,  cost = ? WHERE id = ?;";
+    public static final String DELETE = "DELETE FROM books WHERE id = ?";
+    public static final String COUNT_ALL = "SELECT count(*) FROM books WHERE 1 = ?;";
 
     private ResultSet getResultSet(String sql, String value) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWOORD)) {
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString (1, value);
+            preparedStatement.setString(1, value);
 
             return preparedStatement.executeQuery();
 
@@ -31,8 +35,8 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
-    private ResultSet getResultSet(String sql, long value)  {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
+    private ResultSet getResultSet(String sql, long value) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWOORD)) {
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1, value);
@@ -45,24 +49,10 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
-    public void createTable(){
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
-
-        Statement statement = connection.createStatement();
-        statement.executeUpdate("CREATE TABLE IF NOT EXISTS books( id SERIAL PRIMARY KEY, author VARCHAR(100), isbn VARCHAR(50) NOT NULL UNIQUE, year INT4, cost DECIMAL(24,2));");
-        statement.executeUpdate("CREATE TABLE IF NOT EXISTS authors( id SERIAL PRIMARY KEY, author VARCHAR(100));");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(" BookDaoImpl:private ResultSet getStatement(String sql, String value) ");
-        }
-    }
-
-
     @Override
     public Book findById(long id) {
         try {
-            ResultSet books = getResultSet("SELECT id, author, isbn, year, cost FROM books WHERE id = ?", id);
+            ResultSet books = getResultSet(FIND_BY_ID , id);
 
             Book book = new Book();
 
@@ -85,7 +75,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book findByIsbn(String isbn) {
         try {
-            ResultSet books = getResultSet("SELECT id, author, isbn, year, cost FROM books WHERE isbn = ?", isbn);
+            ResultSet books = getResultSet(FIND_BY_ISBN, isbn);
 
             Book book = new Book();
 
@@ -108,7 +98,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Book> findAll() {
         try {
-            ResultSet books = getResultSet("SELECT id, author, isbn, year, cost FROM books WHERE 1 = ?", 1);
+            ResultSet books = getResultSet(FIND_ALL, 1);
 
             List<Book> listBook = new ArrayList<>();
 
@@ -137,7 +127,7 @@ public class BookDaoImpl implements BookDao {
     public List<Book> findByAuthor(String author) {
 
         try {
-            ResultSet books = getResultSet("SELECT id, author, isbn, year, cost FROM books WHERE author = ?", author);
+            ResultSet books = getResultSet(FIND_BY_AUTHOR, author);
 
             List<Book> listBook = new ArrayList<>();
 
@@ -163,10 +153,10 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book create(Book book) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWOORD)) {
 
 
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO books (author, isbn, year,  cost)  VALUES (?, ?,  ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, book.getAutor());
             statement.setString(2, book.getIsbn());
             statement.setInt(3, book.getYear());
@@ -180,7 +170,7 @@ public class BookDaoImpl implements BookDao {
                 long id = resultSet.getLong(1);
                 return findById(id);
             } else {
-                return new Book(); // говорило, что нет return, пришлось добавлять
+                return new Book();
             }
 
         } catch (Exception e) {
@@ -191,9 +181,9 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book update(Book book) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWOORD)) {
 
-            PreparedStatement statement = connection.prepareStatement("UPDATE books SET author = ?, isbn = ?, year = ?,  cost = ? WHERE id = ?; commit;");
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setString(1, book.getAutor());
             statement.setString(2, book.getIsbn());
             statement.setInt(3, book.getYear());
@@ -212,12 +202,12 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public boolean delete(long id) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bookstore_bh", "postgres", "123")) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWOORD)) {
 
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM books WHERE id = ?");
-        statement.setLong(1, id);
+            PreparedStatement statement = connection.prepareStatement(DELETE);
+            statement.setLong(1, id);
 
-        return (statement.executeUpdate() > 0);
+            return (statement.executeUpdate() > 0);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -228,7 +218,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public long countAll() {
         try {
-            ResultSet books = getResultSet("SELECT count(*) FROM books WHERE 1 = ?;", 1);
+            ResultSet books = getResultSet(COUNT_ALL, 1);
 
             books.next();
             long count = books.getLong(1);
@@ -240,9 +230,4 @@ public class BookDaoImpl implements BookDao {
             throw new RuntimeException("BookDaoImpl: public long countAll()");
         }
     }
-
-//    @Override
-//    public void printTableInfo() {
-//        return null;
-//    }
 }

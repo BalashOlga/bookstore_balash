@@ -1,10 +1,10 @@
-package com.belhard.balash.bookstore.service.impl;
+package com.belhard.bookstore_balash.service.impl;
 
-import com.belhard.balash.bookstore.service.BookService;
-import com.belhard.balash.bookstore.data.dao.BookDao;
-import com.belhard.balash.bookstore.data.dao.impl.BookDaoImpl;
-import com.belhard.balash.bookstore.data.entity.Book;
-import com.belhard.balash.bookstore.service.dto.BookDto;
+import com.belhard.bookstore_balash.service.BookService;
+import com.belhard.bookstore_balash.data.dao.BookDao;
+import com.belhard.bookstore_balash.data.dao.impl.BookDaoImpl;
+import com.belhard.bookstore_balash.data.entity.Book;
+import com.belhard.bookstore_balash.service.dto.BookDto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -109,10 +109,5 @@ public class BookServiceImpl implements BookService {
             }
             return i;
         }
-    }
-
-    @Override
-    public void createTable() {
-        bookDao.createTable();
     }
 }

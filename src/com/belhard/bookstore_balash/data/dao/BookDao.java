@@ -1,10 +1,7 @@
-package com.belhard.balash.bookstore.data.dao;
+package com.belhard.bookstore_balash.data.dao;
 
-import com.belhard.balash.bookstore.data.entity.Book;
+import com.belhard.bookstore_balash.data.entity.Book;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.util.List;
 
 public interface BookDao {
@@ -24,10 +21,4 @@ public interface BookDao {
     boolean delete(long id);
 
     long countAll();
-
-    void createTable();
-
-//    void printTableInfo();
-
-
 }

@@ -1,8 +1,8 @@
-package com.belhard.balash.bookstore.controller;
+package com.belhard.bookstore_balash.controller;
 
-import com.belhard.balash.bookstore.service.BookService;
-import com.belhard.balash.bookstore.service.dto.BookDto;
-import com.belhard.balash.bookstore.service.impl.BookServiceImpl;
+import com.belhard.bookstore_balash.service.BookService;
+import com.belhard.bookstore_balash.service.dto.BookDto;
+import com.belhard.bookstore_balash.service.impl.BookServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -12,33 +12,30 @@ public class Demo {
         Scanner stroka = new Scanner(System.in);
         int action;
 
-        System.out.println("1 - найти книгу по id");
-        System.out.println("2 - найти все книги");
-        System.out.println("3 - найти книги по автору");
-        System.out.println("4 - найти по книгу по isbn");
-        System.out.println("5 - удалить книгу");
-        System.out.println("6 - посчитать количество книг");
-        System.out.println("7 - отредактировать книгу");
-        System.out.println("8 - создать книгу");
-        System.out.println("9 - посчитать стоимость книг указанного автора");
-        System.out.println("10 - выйти из программы");
+        System.out.println("1 - find book by id");
+        System.out.println("2 - find all books");
+        System.out.println("3 - find book by author");
+        System.out.println("4 - find book by isbn");
+        System.out.println("5 - delete book");
+        System.out.println("6 - count of  books");
+        System.out.println("7 - update book");
+        System.out.println("8 - create book");
+        System.out.println("9 - cost of books");
+        System.out.println("10 - exit");
 
         do {
             System.out.println();
-            System.out.print("Введите номер действия: ");
+            System.out.print("Make o choose: ");
             action = stroka.nextInt();
             stroka.nextLine();
 
             BookService bookService = new BookServiceImpl();
-            bookService.createTable();
-
-//       как правильно делать в случае если книги по условию не найдены? null же не правильно возвращать? нужен объект?
 
             switch (action) {
                 case 1:  {
                     System.out.println("findById");
                     if (bookService.getById(39).getId() == null) {
-                        System.out.println("книга не найдена");
+                        System.out.println("The book was not found");
                     }
                     break;
                 }
@@ -46,7 +43,7 @@ public class Demo {
                 case 2: {
                     System.out.println("findALl");
                     if (bookService.getAll().isEmpty()) {
-                        System.out.println("книги не найдены");
+                        System.out.println("The book was not found");
                     }
                     break;
                 }
@@ -54,7 +51,7 @@ public class Demo {
                 case 3: {
                     System.out.println("findByAuthor");
                     if (bookService.getByAuthor("a17").isEmpty()) {
-                        System.out.println("книги указанного автора не найдены");
+                        System.out.println("The book was not found");
                     }
                     break;
                 }
@@ -62,7 +59,7 @@ public class Demo {
                 case 4: {
                     System.out.println("findByIsbn");
                     if (bookService.getByIsbn("978-0-124456-47-2").getIsbn() == null) {
-                        System.out.println("книги с  таким Isbn не найдены");
+                        System.out.println("The book was not found");
                     }
                     break;
                 }
@@ -70,9 +67,9 @@ public class Demo {
                 case 5: {
                     System.out.println("delete");
                     if (bookService.delete(50)) {
-                        System.out.println("книга удалена");
+                        System.out.println("The book has been deleted");
                     } else {
-                        System.out.println("книга c таким id не была удалена, так как не была найдена");
+                        System.out.println("The book with this id was not deleted because it was not found");
                     }
                     break;
                 }
@@ -85,25 +82,25 @@ public class Demo {
 
                 case 7: {
                     System.out.println("update");
-                    BookDto book1 = new BookDto(36L, "dhfsgh", "978-0-444556-57-2", 2023, null);
+                    BookDto book1 = new BookDto(7L, "daafsgh", "978-0-444556-57-2", 2023, null);
                     if(bookService.update(book1).getId() == null){
-                        System.out.println("книга не была обновлена");
+                        System.out.println("The book has not been updated");
                     }
                     break;
                 }
 
                 case 8: {
                     System.out.println("create");
-                    BookDto book2 = new BookDto(null, "a17", "777-0-16957-87-2", 2023, null);
+                    BookDto book2 = new BookDto(null, "a28", "707-0-16057-87-2", 2023, BigDecimal.valueOf(75));
                     bookService.create(book2);
                     break;
                 }
 
                 case 9: {
                     System.out.println("getCostByAuthor");
-                    BigDecimal costByAuthor = bookService.getCostByAuthor("a17");
+                    BigDecimal costByAuthor = bookService.getCostByAuthor("a28");
                     if (costByAuthor == null) {
-                        System.out.println("книги указанного автора не найдены");
+                        System.out.println("The book was not found");
                     } else {
                         System.out.println("costByAuthor = " + costByAuthor);
                     }
@@ -111,12 +108,12 @@ public class Demo {
                 }
 
                 case 10: {
-                    System.out.print("Завершаем программу");
+                    System.out.print("Completing the program");
                     break;
                 }
 
                 default: {
-                    System.out.print("Нет такой команды");
+                    System.out.print("There is no such command");
                 }
             }
         } while (action != 10);

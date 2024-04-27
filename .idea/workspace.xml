@@ -5,19 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e9ccc0f-cc0c-4c44-934c-5d31d2bb9c9a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/controller/Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/controller/Demo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/BookDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/BookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/impl/BookServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/controller/Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/controller/Demo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/data/dao/BookDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/data/dao/impl/BookDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/entity/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/data/entity/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/dto/BookDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/service/dto/BookDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/balash/bookstore/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/belhard/bookstore_balash/service/impl/BookServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="module2_service" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -43,12 +66,59 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Demo.executor": "Run",
+    "Application.DemoForUser.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "module2__service",
+    "git-widget-placeholder": "module3__user",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/91757/IdeaProjects/Connection"
+    "last_opened_file_path": "C:/Study/bookstore_balash",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.belhard.balash.bookstore.controller" />
+      <recent name="com.belhard.balash.bookstore.service.impl" />
+      <recent name="com.belhard.balash.bookstore.service.dto" />
+      <recent name="com.belhard.balash.bookstore.data.dao" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.DemoForUser">
+    <configuration name="Demo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.belhard.bookstore_balash.controller.Demo" />
+      <module name="bookstore_balash" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.belhard.bookstore_balash.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DemoForUser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.belhard.bookstore_balash.controller.DemoForUser" />
+      <module name="bookstore_balash" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.belhard.bookstore_balash.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.DemoForUser" />
+        <item itemvalue="Application.Demo" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -65,30 +135,29 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="15" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="15" />
+                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="15" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="module3_user" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java</url>
-          <line>136</line>
-          <properties class="com.belhard.balash.bookstore.data.dao.impl.BookDaoImpl" method="findByAuthor">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/belhard/balash/bookstore/data/dao/impl/BookDaoImpl.java</url>
-          <line>193</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

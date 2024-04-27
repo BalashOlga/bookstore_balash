@@ -1,6 +1,6 @@
-package com.belhard.balash.bookstore.service;
+package com.belhard.bookstore_balash.service;
 
-import com.belhard.balash.bookstore.service.dto.BookDto;
+import com.belhard.bookstore_balash.service.dto.BookDto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,7 +24,4 @@ public interface BookService {
     long getcountAll();
 
     BigDecimal getCostByAuthor(String author);
-
-    void createTable();
-
 }
