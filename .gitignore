@@ -1,10 +1,17 @@
-### IntelliJ IDEA ###
-out/
-#**/src/main/**/out/
-#**/src/test/**/out/
+#Maven
+target/
 
-*/data/sql/
-*/data/connection/
+#Project specific files
+sql/
+*.~*
+
+### IntelliJ IDEA ###
+.idea/
+out/
+**/src/main/**/out/
+**/src/test/**/out/
+.idea
+*.iml
 
 ### Eclipse ###
 .apt_generated
