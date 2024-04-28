@@ -21,7 +21,7 @@ public interface BookService {
 
     boolean delete(long id);
 
-    long getcountAll();
+    long getCountAll();
 
     BigDecimal getCostByAuthor(String author);
 }

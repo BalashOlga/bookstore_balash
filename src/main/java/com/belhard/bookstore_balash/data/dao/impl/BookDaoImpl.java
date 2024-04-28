@@ -2,12 +2,15 @@ package com.belhard.bookstore_balash.data.dao.impl;
 
 import com.belhard.bookstore_balash.data.dao.BookDao;
 import com.belhard.bookstore_balash.data.entity.Book;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookDaoImpl implements BookDao {
+    private static final Logger log = LogManager.getFormatterLogger(BookDaoImpl.class);
 
     public static final String URL = "jdbc:postgresql://localhost:5432/bookstore_bh";
     public static final String USER = "postgres";
@@ -23,6 +26,7 @@ public class BookDaoImpl implements BookDao {
 
     private ResultSet getResultSet(String sql, String value) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWOORD)) {
+            log.info("Connection get successfully");
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, value);
@@ -30,13 +34,14 @@ public class BookDaoImpl implements BookDao {
             return preparedStatement.executeQuery();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException(" BookDaoImpl:private ResultSet getStatement(String sql, String value) ");
         }
     }
 
     private ResultSet getResultSet(String sql, long value) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWOORD)) {
+            log.info("Connection get successfully");
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1, value);
@@ -44,7 +49,7 @@ public class BookDaoImpl implements BookDao {
             return preparedStatement.executeQuery();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException("BookDaoImpl: ");
         }
     }
@@ -53,6 +58,7 @@ public class BookDaoImpl implements BookDao {
     public Book findById(long id) {
         try {
             ResultSet books = getResultSet(FIND_BY_ID , id);
+            log.debug("Select FIND_BY_ID has been completed");
 
             Book book = new Book();
 
@@ -67,7 +73,7 @@ public class BookDaoImpl implements BookDao {
             return book;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException("BookDaoImpl: public Book findById(long id)");
         }
     }
@@ -76,6 +82,7 @@ public class BookDaoImpl implements BookDao {
     public Book findByIsbn(String isbn) {
         try {
             ResultSet books = getResultSet(FIND_BY_ISBN, isbn);
+            log.debug("Select FIND_BY_ISBN has been completed");
 
             Book book = new Book();
 
@@ -90,7 +97,7 @@ public class BookDaoImpl implements BookDao {
             return book;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException("BookDaoImpl: public Book findByIsbn(String isbn)");
         }
     }
@@ -99,6 +106,7 @@ public class BookDaoImpl implements BookDao {
     public List<Book> findAll() {
         try {
             ResultSet books = getResultSet(FIND_ALL, 1);
+            log.debug("Select FIND_ALL has been completed");
 
             List<Book> listBook = new ArrayList<>();
 
@@ -118,7 +126,7 @@ public class BookDaoImpl implements BookDao {
             return listBook;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException("BookDaoImpl:  public List<Book> findAll()");
         }
     }
@@ -128,6 +136,7 @@ public class BookDaoImpl implements BookDao {
 
         try {
             ResultSet books = getResultSet(FIND_BY_AUTHOR, author);
+            log.debug("Select FIND_BY_AUTHOR has been completed");
 
             List<Book> listBook = new ArrayList<>();
 
@@ -146,7 +155,7 @@ public class BookDaoImpl implements BookDao {
             return listBook;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException("BookDaoImpl: public List<Book> findByAuthor(String author)");
         }
     }
@@ -154,7 +163,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book create(Book book) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWOORD)) {
-
+            log.info("Connection get successfully");
 
             PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, book.getAutor());
@@ -163,6 +172,8 @@ public class BookDaoImpl implements BookDao {
             statement.setBigDecimal(4, book.getCost());
 
             statement.executeUpdate();
+            log.debug("Update CREATE has been completed");
+
 
             ResultSet resultSet = statement.getGeneratedKeys();
 
@@ -174,7 +185,7 @@ public class BookDaoImpl implements BookDao {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException("BookDaoImpl: public boolean delete(long id)");
         }
     }
@@ -182,6 +193,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book update(Book book) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWOORD)) {
+            log.info("Connection get successfully");
 
             PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setString(1, book.getAutor());
@@ -191,11 +203,12 @@ public class BookDaoImpl implements BookDao {
             statement.setLong(5, book.getId());
 
             statement.executeUpdate();
+            log.debug("Update UPDATE has been completed");
 
             return findById(book.getId());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException("BookDaoImpl: public boolean delete(long id)");
         }
     }
@@ -203,14 +216,18 @@ public class BookDaoImpl implements BookDao {
     @Override
     public boolean delete(long id) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWOORD)) {
+            log.info("Connection get successfully");
 
             PreparedStatement statement = connection.prepareStatement(DELETE);
             statement.setLong(1, id);
+            int i = statement.executeUpdate();
+            log.debug("Update DELETE has been completed");
 
-            return (statement.executeUpdate() > 0);
+
+            return (i > 0);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException("BookDaoImpl: public boolean delete(long id)");
         }
     }
@@ -219,6 +236,7 @@ public class BookDaoImpl implements BookDao {
     public long countAll() {
         try {
             ResultSet books = getResultSet(COUNT_ALL, 1);
+            log.debug("Select COUNT_ALL has been completed");
 
             books.next();
             long count = books.getLong(1);
@@ -226,7 +244,7 @@ public class BookDaoImpl implements BookDao {
             return count;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
             throw new RuntimeException("BookDaoImpl: public long countAll()");
         }
     }

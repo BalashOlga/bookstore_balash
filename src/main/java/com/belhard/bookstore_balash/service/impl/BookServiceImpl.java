@@ -5,12 +5,15 @@ import com.belhard.bookstore_balash.data.dao.BookDao;
 import com.belhard.bookstore_balash.data.dao.impl.BookDaoImpl;
 import com.belhard.bookstore_balash.data.entity.Book;
 import com.belhard.bookstore_balash.service.dto.BookDto;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class BookServiceImpl implements BookService {
-
+    private static final Logger log = LogManager.getFormatterLogger(BookServiceImpl.class);
     private final BookDao bookDao = new BookDaoImpl();
 
     private BookDto toDto(Book book) {
@@ -39,16 +42,19 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getById(long id) {
+        log.debug("Calling getById");
         return toDto(bookDao.findById(id));
     }
 
     @Override
     public BookDto getByIsbn(String isbn) {
+        log.debug("Calling getByIsbn");
         return toDto(bookDao.findByIsbn(isbn));
     }
 
     @Override
     public List<BookDto> getAll() {
+        log.debug("Calling getByAll");
         return bookDao.findAll()
                 .stream()
                 .map(this::toDto)
@@ -68,6 +74,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getByAuthor(String author) {
+        log.debug("Calling getByAuthor");
         return bookDao.findByAuthor(author)
                 .stream()
                 .map(this::toDto)
@@ -76,26 +83,31 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto create(BookDto bookDto) {
+        log.debug("Calling create");
         return toDto(bookDao.create(toBook(bookDto)));
     }
 
     @Override
     public BookDto update(BookDto bookDto) {
+        log.debug("Calling update");
         return toDto(bookDao.update(toBook(bookDto)));
     }
 
     @Override
     public boolean delete(long id) {
+        log.debug("Calling delete");
         return bookDao.delete(id);
     }
 
     @Override
-    public long getcountAll() {
+    public long getCountAll() {
+        log.debug("Calling getCountAll");
         return bookDao.countAll();
     }
 
     @Override
     public BigDecimal getCostByAuthor(String author) {
+        log.debug("Calling getCostByAuthor");
         List<Book> bookList = bookDao.findByAuthor(author);
 
         if (bookList.isEmpty()){

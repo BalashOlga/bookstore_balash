@@ -21,7 +21,7 @@ public interface UserService {
 
     boolean delete(long id);
 
-    long getcountAll();
+    long getCountAll();
 
     UserDto login(String login, String password);
 }

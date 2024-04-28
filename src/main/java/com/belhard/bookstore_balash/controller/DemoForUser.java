@@ -32,79 +32,61 @@ public class DemoForUser {
             UserService userService = new UserServiceImpl();
 
             switch (action) {
-                case 1: {
+                case 1 -> {
                     System.out.println("getById");
                     if (userService.getById(5).getId() == null) {
                         System.out.println("The user was not found");
                     }
-                    break;
                 }
-
-                case 2: {
+                case 2 -> {
                     System.out.println("getALl");
                     if (userService.getAll().isEmpty()) {
                         System.out.println("The user was not found");
                     }
-                    break;
                 }
-
-                case 3: {
+                case 3 -> {
                     System.out.println("getByEmail");
                     if (userService.getByEmail("email12@mail.ru") == null) {
                         System.out.println("The user was not found");
                     }
-                    break;
                 }
-
-                case 4: {
+                case 4 -> {
                     System.out.println("getByLastName");
                     if (userService.getByLastName("Last23").isEmpty()) {
                         System.out.println("The user was not found");
                     }
-                    break;
                 }
-
-                case 5: {
+                case 5 -> {
                     System.out.println("getByLogin");
                     if (userService.getByLogin("user16") == null) {
                         System.out.println("The user was not found");
                     }
-                    break;
                 }
-
-                case 6: {
+                case 6 -> {
                     System.out.println("delete");
                     if (userService.delete(100)) {
                         System.out.println("The user has been deleted");
                     } else {
                         System.out.println("The book with this id was not deleted because it was not found");
                     }
-                    break;
                 }
-
-                case 7: {
+                case 7 -> {
                     System.out.println("update");
                     UserDto book1 = new UserDto(7L, "user78", "111-0-124456-47-3", "First9", "Last9", "email78@mail.ru", 3L);
                     if (userService.update(book1).getId() == null) {
                         System.out.println("The user has not been updated");
                     }
-                    break;
                 }
-
-                case 8: {
+                case 8 -> {
                     System.out.println("create");
                     UserDto book2 = new UserDto(null, "user77", "111-0-124456-47-3", "First9", "Last9", "email77@mail.ru", 3L);
                     userService.create(book2);
-                    break;
                 }
-
-                case 9: {
-                    System.out.println("getcountAll");
-                    System.out.println(userService.getcountAll());
-                    break;
+                case 9 -> {
+                    System.out.println("getCountAll");
+                    System.out.println(userService.getCountAll());
                 }
-
-                case 10: {
+                case 10 -> {
                     System.out.println("login");
                     UserDto userDto = userService.login("user16", "977-0-783456-47-2");
                     if (userDto.getId() == null) {
@@ -112,18 +94,14 @@ public class DemoForUser {
                     } else {
                         System.out.println(userDto);
                     }
-                    break;
                 }
-
-                case 11: {
+                case 11 -> {
                     System.out.print("Completing the program");
-                    break;
                 }
-
-                default: {
+                default -> {
                     System.out.print("There is no such command");
                 }
             }
-        } while (action != 10);
+        } while (action != 11);
     }
 }
