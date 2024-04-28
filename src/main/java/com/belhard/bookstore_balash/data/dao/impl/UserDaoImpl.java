@@ -56,7 +56,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findById(long id) {
-        try {
+        try {Class.forName("org.postgresql.Driver");
             ResultSet users = getResultSet(FIND_BY_ID, id);
             log.debug("Select FIND_BY_ID has been completed");
 
@@ -83,6 +83,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findByEmail(String email) {
         try {
+            Class.forName("org.postgresql.Driver");
             ResultSet users = getResultSet(FIND_BY_EMAIL, email);
             log.debug("Select FIND_BY_EMAIL has been completed");
 
@@ -109,6 +110,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findAll() {
         try {
+            Class.forName("org.postgresql.Driver");
             ResultSet users = getResultSet(FIND_ALL, 1);
             log.debug("Select FIND_ALL has been comleted");
 
@@ -240,6 +242,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public long countAll() {
         try {
+            Class.forName("org.postgresql.Driver");
             ResultSet users = getResultSet(COUNT_ALL, 1);
             log.debug("Select COUNT_ALL has been completed ");
 
@@ -257,6 +260,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findByLastName(String lastName) {
         try {
+            Class.forName("org.postgresql.Driver");
             ResultSet users = getResultSet(FIND_BY_LAST_NAME, lastName);
             log.debug("Select FIND_BY_LAST_NAME has been completed");
 

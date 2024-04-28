@@ -57,6 +57,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book findById(long id) {
         try {
+            Class.forName("org.postgresql.Driver");
             ResultSet books = getResultSet(FIND_BY_ID , id);
             log.debug("Select FIND_BY_ID has been completed");
 
@@ -105,6 +106,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Book> findAll() {
         try {
+            Class.forName("org.postgresql.Driver");
             ResultSet books = getResultSet(FIND_ALL, 1);
             log.debug("Select FIND_ALL has been completed");
 
@@ -135,6 +137,7 @@ public class BookDaoImpl implements BookDao {
     public List<Book> findByAuthor(String author) {
 
         try {
+            Class.forName("org.postgresql.Driver");
             ResultSet books = getResultSet(FIND_BY_AUTHOR, author);
             log.debug("Select FIND_BY_AUTHOR has been completed");
 
@@ -235,6 +238,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public long countAll() {
         try {
+            Class.forName("org.postgresql.Driver");
             ResultSet books = getResultSet(COUNT_ALL, 1);
             log.debug("Select COUNT_ALL has been completed");
 

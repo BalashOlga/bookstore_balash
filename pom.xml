@@ -8,13 +8,15 @@
     <groupId>com.belhard</groupId>
     <artifactId>bookstore_balash</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <postgresql.version>42.7.3</postgresql.version>
         <log4j.version>2.23.1</log4j.version>
+        <servlet.version>6.0.0</servlet.version>
+        <war.plugin.version>3.4.0</war.plugin.version>
     </properties>
 
     <dependencies>
@@ -35,6 +37,24 @@
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>${servlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${war.plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

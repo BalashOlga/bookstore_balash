@@ -8,10 +8,10 @@
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="${pattern_console}"></PatternLayout>
+            <PatternLayout pattern="${pattern_console}"/>
         </Console>
         <File name="File1" fileName="${LOG_DIR}\text.log" bufferedIO="true">
-            <PatternLayout pattern="${pattern_file}"></PatternLayout>
+            <PatternLayout pattern="${pattern_file}"/>
         </File>
     </Appenders>
 
