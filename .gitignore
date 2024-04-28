@@ -4,6 +4,7 @@ target/
 #Project specific files
 sql/
 *.~*
+log/
 
 ### IntelliJ IDEA ###
 .idea/
