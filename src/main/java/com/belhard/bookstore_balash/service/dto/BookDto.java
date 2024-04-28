@@ -1,4 +1,4 @@
-package com.belhard.balash.bookstore.service.dto;
+package com.belhard.bookstore_balash.service.dto;
 
 import java.math.BigDecimal;
 
