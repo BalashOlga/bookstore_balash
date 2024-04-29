@@ -1,6 +1,7 @@
 package com.belhard.bookstore_balash.controller;
 
 import com.belhard.bookstore_balash.service.UserService;
+import com.belhard.bookstore_balash.service.dto.BookDto;
 import com.belhard.bookstore_balash.service.dto.UserDto;
 import com.belhard.bookstore_balash.service.impl.UserServiceImpl;
 import jakarta.servlet.ServletException;
@@ -26,7 +27,8 @@ public class UsersController extends HttpServlet {
 
         out.println("<h1>Users</h1>");
         for (UserDto user : users) {
-            out.println("<p>"+ user.getEmail()+"</p>" );
+            out.println("<p>" + user.getEmail() +
+                        "<a href = http://localhost:8080/bookstore_balash-1.0/user?id="+user.getId() +"> User </a> </p>");
         }
     }
 }

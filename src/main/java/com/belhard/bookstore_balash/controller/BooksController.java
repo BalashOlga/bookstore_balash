@@ -27,7 +27,8 @@ public class BooksController extends HttpServlet {
         out.println("<h1>Books</h1>");
 
         for (BookDto book : books) {
-            out.println("<p>" + book.getIsbn() + "</p>");
+            out.println("<p>" + book.getId() +
+            "<a href = http://localhost:8080/bookstore_balash-1.0/book?id="+book.getId() +"> Book </a> </p>");
         }
     }
 }
