@@ -1,0 +1,23 @@
+package com.belhard.bookstore.controller;
+
+import com.belhard.bookstore.service.BookService;
+import com.belhard.bookstore.service.dto.BookDto;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
+@RequiredArgsConstructor
+public class BookCommand implements  Command {
+
+    private final BookService service;
+
+    @Override
+    public String execute(HttpServletRequest req) {
+        String idStr = req.getParameter("id");
+        Long id = Long.parseLong(idStr);
+        BookDto bookDto = service.getById(id);
+        return ("<h1>Book</h1><p>" + bookDto.getId() + "</p><p>" + bookDto.getAuthor() + "</p>");
+    }
+}
+

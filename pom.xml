@@ -6,17 +6,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.belhard</groupId>
-    <artifactId>bookstore_balash</artifactId>
+    <artifactId>bookstore</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <postgresql.version>42.7.3</postgresql.version>
         <log4j.version>2.23.1</log4j.version>
+        <slf4j.version>2.0.13</slf4j.version>
         <servlet.version>6.0.0</servlet.version>
         <war.plugin.version>3.4.0</war.plugin.version>
+        <compiler.plugin.version>3.13.0</compiler.plugin.version>
+        <lombok.version>1.18.32</lombok.version>
+        <log4j2-slf4j.version>2.23.1</log4j2-slf4j.version>
     </properties>
 
     <dependencies>
@@ -38,12 +42,47 @@
             <version>${log4j.version}</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>slf4j-reload4j</artifactId>-->
+<!--            <version>${slf4j.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>slf4j-nop</artifactId>-->
+<!--            <version>${slf4j.version}</version>-->
+<!--&lt;!&ndash;            <scope>test</scope>&ndash;&gt;-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>slf4j-api</artifactId>-->
+<!--            <version>${slf4j.version}</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.apache.logging.log4j</groupId>-->
+<!--            <artifactId>log4j-slf4j2-impl</artifactId>-->
+<!--            <version>${log4j2-slf4j.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
+
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <version>${servlet.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -54,6 +93,20 @@
                 <version>${war.plugin.version}</version>
                 <configuration>
                     <outputDirectory>${env.TOMCAT_HOME}\webapps\</outputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler.plugin.version}</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
