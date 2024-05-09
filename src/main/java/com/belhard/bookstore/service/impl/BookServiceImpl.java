@@ -1,0 +1,161 @@
+package com.belhard.bookstore.service.impl;
+
+import com.belhard.bookstore.data.dao.BookDao;
+import com.belhard.bookstore.data.entity.Book;
+import com.belhard.bookstore.controller.NotFoundException;
+import com.belhard.bookstore.service.BookService;
+import com.belhard.bookstore.service.dto.BookDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Log4j2
+@RequiredArgsConstructor
+public class BookServiceImpl implements BookService {
+//    private static final Logger log = LogManager.getFormatterLogger(BookServiceImpl.class);
+    private final BookDao bookDao;
+
+    private BookDto toDto(Book book) {
+        BookDto bookDto = new BookDto();
+
+        bookDto.setId(book.getId());
+        bookDto.setAuthor(book.getAuthor());
+        bookDto.setIsbn(book.getIsbn());
+        bookDto.setYear(book.getYear());
+        bookDto.setCost(book.getCost());
+
+        return bookDto;
+    }
+
+    private Book toBook(BookDto bookDto) {
+        Book book = new Book();
+
+        book.setId(bookDto.getId());
+        book.setAuthor(bookDto.getAuthor());
+        book.setIsbn(bookDto.getIsbn());
+        book.setYear(bookDto.getYear());
+        book.setCost(bookDto.getCost());
+
+        return book;
+    }
+
+    @Override
+    public BookDto getById(long id) {
+        log.debug("Calling getById");
+
+        Book book = bookDao.findById(id);
+
+        if (book == null) {
+            throw new NotFoundException("Book whith id = " + id + " is not found!");
+        } else {
+            return toDto(book);
+        }
+    }
+
+
+    @Override
+    public BookDto getByIsbn(String isbn) {
+        log.debug("Calling getByIsbn");
+
+        Book book= bookDao.findByIsbn(isbn);
+
+        if (book == null){
+            throw new NotFoundException("Book whith isbn = " + isbn + " is not found!");
+        } else {
+            return toDto(book);
+        }
+    }
+
+    @Override
+    public List<BookDto> getAll() {
+        log.debug("Calling getByAll");
+
+       List<Book> listBook =  bookDao.findAll();
+
+        if (listBook.isEmpty()){
+            throw new NotFoundException("Books are not found!");
+        } else {
+            return listBook
+                    .stream()
+                    .map(this::toDto)
+                    .toList();
+        }
+    }
+
+    @Override
+    public List<BookDto> getByAuthor(String author) {
+        log.debug("Calling getByAuthor");
+
+        List<Book> listBook =  bookDao.findByAuthor(author);
+
+        if (listBook.isEmpty()){
+            throw new NotFoundException("Books are not found!");
+        } else {
+            return listBook
+                    .stream()
+                    .map(this::toDto)
+                    .toList();
+        }
+    }
+
+    @Override
+    public BookDto create(BookDto bookDto) {
+        log.debug("Calling create");
+
+        Book book = bookDao.create(toBook(bookDto));
+
+        if (book == null){
+            throw new NotFoundException(bookDto.toString()+ " is not created!");
+        } else {
+            return toDto(book);
+        }
+    }
+
+    @Override
+    public BookDto update(BookDto bookDto) {
+        log.debug("Calling update");
+
+        Book book = bookDao.update(toBook(bookDto));
+
+        if (book == null){
+            throw new NotFoundException(bookDto.toString()+ " is not updated!");
+        } else {
+            return toDto(book);
+        }
+    }
+
+    @Override
+    public void delete(long id) {
+        log.debug("Calling delete");
+
+        if (!bookDao.delete(id)) {
+            throw new NotFoundException("Deletion error by id = " + id + "!" );
+        }
+    }
+
+    @Override
+    public long getCountAll() {
+        log.debug("Calling getCountAll");
+        return bookDao.countAll();
+    }
+
+    @Override
+    public BigDecimal getCostByAuthor(String author) {
+        log.debug("Calling getCostByAuthor");
+        List<Book> bookList = bookDao.findByAuthor(author);
+
+        if (bookList.isEmpty()){
+            throw new NotFoundException("Books by author " + author + " are not found!" );
+        } else {
+            BigDecimal i = BigDecimal.valueOf(0);
+            for (Book book : bookList) {
+                if (book.getCost() != null) {
+                    i = i.add(book.getCost());
+                }
+            }
+            return i;
+        }
+    }
+}
