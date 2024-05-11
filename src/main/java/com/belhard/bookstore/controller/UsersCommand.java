@@ -16,7 +16,8 @@ public class UsersCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         List<UserDtoWithoutPassword> users = service.getAll();
-        return ("<h1>Users</h1>");
+        req.setAttribute("users", users);
+        return "jsp/user/users.jsp";
     }
 }
 

@@ -65,7 +65,7 @@ public class BookDaoImpl implements BookDao {
                 book.setIsbn(books.getString("isbn"));
                 book.setYear(books.getInt("year"));
                 book.setCost(books.getBigDecimal("cost"));
-                book.setCover(CoverType.valueOf(books.getString("covertype")));
+                book.setCoverType(CoverType.valueOf(books.getString("covertype")));
                 log.debug(book.toString());
                 return book;
             }
@@ -89,7 +89,7 @@ public class BookDaoImpl implements BookDao {
                 book.setIsbn(books.getString("isbn"));
                 book.setYear(books.getInt("year"));
                 book.setCost(books.getBigDecimal("cost"));
-                book.setCover(CoverType.valueOf(books.getString("covertype")));
+                book.setCoverType(CoverType.valueOf(books.getString("covertype")));
                 log.debug(book.toString());
 
                 return book;
@@ -117,7 +117,7 @@ public class BookDaoImpl implements BookDao {
                 book.setIsbn(books.getString("isbn"));
                 book.setYear(books.getInt("year"));
                 book.setCost(books.getBigDecimal("cost"));
-                book.setCover(CoverType.valueOf(books.getString("covertype")));
+                book.setCoverType(CoverType.valueOf(books.getString("covertype")));
 
                 listBook.add(book);
                 log.debug(book.toString());
@@ -151,7 +151,7 @@ public class BookDaoImpl implements BookDao {
                 book.setIsbn(books.getString("isbn"));
                 book.setYear(books.getInt("year"));
                 book.setCost(books.getBigDecimal("cost"));
-                book.setCover(CoverType.valueOf(books.getString("covertype")));
+                book.setCoverType(CoverType.valueOf(books.getString("covertype")));
 
                 listBook.add(book);
                 log.debug(book.toString());
@@ -205,7 +205,7 @@ public class BookDaoImpl implements BookDao {
             statement.setString(2, book.getIsbn());
             statement.setInt(3, book.getYear());
             statement.setBigDecimal(4, book.getCost());
-            statement.setString(5, book.getCover().name());
+            statement.setString(5, book.getCoverType().name());
             statement.setLong(6, book.getId());
 
             statement.executeUpdate();

@@ -13,14 +13,14 @@ import java.io.PrintWriter;
 @WebServlet("/controller")
 @Log4j2
 public class Controller extends HttpServlet {
-    private CommandFactory commandFactory = CommandFactory.INSTANCE;
+    private CommandFactory commandFactory;
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             String command = req.getParameter("command");
             Command commandInstance = commandFactory.getCommand(command);
-            PrintWriter out = resp.getWriter();
-            out.println(commandInstance.execute(req));
+            String page = commandInstance.execute(req);
+            req.getRequestDispatcher(page).forward(req,resp);
         } catch (NumberFormatException e) {
             resp.setStatus(400);
             log.debug(e.getMessage());
@@ -42,5 +42,18 @@ public class Controller extends HttpServlet {
             out.println("<h1>Error</h1>");
             out.println("<p> The disaster on the swing </p>");
         }
+    }
+
+    @Override
+    public void destroy() {
+        if (commandFactory != null) {
+            commandFactory.shutdown();
+        }
+    }
+
+    @Override
+    public void init() throws ServletException {
+        commandFactory = CommandFactory.getInstance();
+        log.info("Сontroller is running");
     }
 }

@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Log4j2
 public class CommandFactory {
-    public static final CommandFactory INSTANCE = new CommandFactory();
+    private static final CommandFactory INSTANCE = new CommandFactory();
     private static final String DB_URL_KEY = "db.url";
     private static final String DB_PASSWORD_KEY = "db.password";
     private static final String DB_USER_KEY = "db.user";
@@ -30,6 +30,7 @@ public class CommandFactory {
     private static final String DB_POOL_SIZE = "db.poolsize";
     private final List<Closeable> resources;
     private final Map<String, Command> commands;
+
     public static CommandFactory getInstance() {return INSTANCE;}
 
     private CommandFactory() {
@@ -37,15 +38,14 @@ public class CommandFactory {
         commands = new HashMap<>();
 
         //ConnectionManager
-        ConfigurationManager configurationManager = new ConfigurationManager();
-        String url = configurationManager.getProperties(DB_URL_KEY);
-        String password = configurationManager.getProperties(DB_PASSWORD_KEY);
-        String user = configurationManager.getProperties(DB_USER_KEY);
-        String driver = configurationManager.getProperties( DB_DRIVER_KEY);
-        int poolsize = Integer.parseInt(configurationManager.getProperties(DB_POOL_SIZE));
+        ConfigurationManager configurationManager = new ConfigurationManager("/application.properties");
+        String url = configurationManager.getProperty(DB_URL_KEY);
+        String password = configurationManager.getProperty(DB_PASSWORD_KEY);
+        String user = configurationManager.getProperty(DB_USER_KEY);
+        String driver = configurationManager.getProperty( DB_DRIVER_KEY);
+        int poolsize = Integer.parseInt(configurationManager.getProperty(DB_POOL_SIZE));
 
         ConnectionManager connectionManager = new ConnectionManagerImpl(driver, url, user, password, poolsize);
-//        ConnectionManager connectionManager = new ConnectionManagerImpl("jdbc:postgresql", ":/localhost:5432", "postgres", "123", 16);
         resources.add(connectionManager);
 
         // DAO
@@ -55,8 +55,6 @@ public class CommandFactory {
         //service
         BookService bookService = new BookServiceImpl(bookDao);
         UserService userService = new UserServiceImpl(userDao);
-
-        //COMMANDS
 
         // book
         commands.put("book", new BookCommand(bookService));
@@ -68,7 +66,7 @@ public class CommandFactory {
     }
 
     public Command getCommand(String command){
-        return getInstance().commands.get(command);
+        return INSTANCE.commands.get(command);
     }
 
     public void shutdown() {
@@ -77,7 +75,6 @@ public class CommandFactory {
                 resource.close();
             } catch (IOException e) {
                 log.error("Unable to close {}", resource);
-            }
-        });
+            }});
     }
 }

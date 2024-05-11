@@ -25,7 +25,7 @@ public class BookServiceImpl implements BookService {
         bookDto.setIsbn(book.getIsbn());
         bookDto.setYear(book.getYear());
         bookDto.setCost(book.getCost());
-
+        bookDto.setCoverType(book.getCoverType());
         return bookDto;
     }
 
@@ -37,6 +37,7 @@ public class BookServiceImpl implements BookService {
         book.setIsbn(bookDto.getIsbn());
         book.setYear(bookDto.getYear());
         book.setCost(bookDto.getCost());
+        book.setCoverType(bookDto.getCoverType());
 
         return book;
     }

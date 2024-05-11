@@ -13,11 +13,11 @@ public class UserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-                String idStr= req.getParameter("id");
+        String idStr = req.getParameter("id");
         Long id = Long.parseLong(idStr);
         UserDtoWithoutPassword user = service.getById(id);
-        return "<h1>User</h1> <p>" + user.getLogin() + "</p><p>" + user.getEmail() + "</p>";
-
+        req.setAttribute("user", user);
+        return "jsp/user/user.jsp";
     }
 }
 

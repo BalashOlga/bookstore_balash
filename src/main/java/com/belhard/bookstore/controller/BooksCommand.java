@@ -2,6 +2,7 @@ package com.belhard.bookstore.controller;
 
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.dto.BookDto;
+import com.belhard.bookstore.service.dto.UserDtoWithoutPassword;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -18,8 +19,8 @@ public class BooksCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         List<BookDto> books = service.getAll();
-
-        return ("<h1>Users</h1>");
+        req.setAttribute("books", books);
+        return "jsp/book/books.jsp";
     }
 }
 
