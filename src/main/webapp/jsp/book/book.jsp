@@ -5,10 +5,11 @@
     <head>
         <meta charset="UTF-8" />
         <title><%=request.getServletContext().getServerInfo() %></title>
-        <link href="bookstore.css" rel="stylesheet" type="text/css" />
+        <link href="css/bookstore.css" rel="stylesheet" type="text/css" />
     </head>
 
     <body>
+        <jsp:include page="../navbar.jsp"/>
         <c:if test="${book != null}">
             <h1>Books Info</h1>
             <table>
@@ -28,6 +29,7 @@
                     <th>${book.coverType.name()}</th>
                     <th>${book.cost}</th>
                     <th><a href="controller?command=books">All books</a></th>
+                    <th><a href="controller?command=book_edit_form&id=${book.id}">Edit book</a></th>
                 </tr>
             </table>
         </c:if>

@@ -3,8 +3,10 @@ package com.belhard.bookstore.service.impl;
 import com.belhard.bookstore.data.dao.BookDao;
 import com.belhard.bookstore.data.entity.Book;
 import com.belhard.bookstore.controller.NotFoundException;
+import com.belhard.bookstore.data.entity.User;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.dto.BookDto;
+import com.belhard.bookstore.service.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -105,10 +107,17 @@ public class BookServiceImpl implements BookService {
     public BookDto create(BookDto bookDto) {
         log.debug("Calling create");
 
+        String isbnToBeCreate = bookDto.getIsbn();
+        Book byIsbn = bookDao.findByIsbn(isbnToBeCreate);
+
+        if (byIsbn != null) {
+            throw new NotFoundException("No valid isbn" + bookDto.toString() + " is not created!");
+        }
+
         Book book = bookDao.create(toBook(bookDto));
 
         if (book == null){
-            throw new NotFoundException(bookDto.toString()+ " is not created!");
+            throw new NotFoundException("Book is not create!");
         } else {
             return toDto(book);
         }
@@ -118,10 +127,31 @@ public class BookServiceImpl implements BookService {
     public BookDto update(BookDto bookDto) {
         log.debug("Calling update");
 
-        Book book = bookDao.update(toBook(bookDto));
+        String isbnToBeUpdated = bookDto.getIsbn();
+        Book byIsbn = bookDao.findByIsbn(isbnToBeUpdated);
 
+        if (byIsbn != null && !byIsbn.getId().equals(bookDto.getId())) {
+            throw new NotFoundException("No valid isbn" + bookDto.toString() + " is not created!");
+        }
+
+        if (bookDto.getAuthor() == null) {
+            bookDto.setAuthor(byIsbn.getAuthor());
+        }
+        if (bookDto.getYear() == null) {
+            bookDto.setYear(byIsbn.getYear());
+        }
+
+        if (bookDto.getCost() == null) {
+            bookDto.setCost(byIsbn.getCost());
+        }
+
+        if (bookDto.getCoverType() == null) {
+            bookDto.setCoverType(byIsbn.getCoverType());
+        }
+
+        Book book = bookDao.update(toBook(bookDto));
         if (book == null){
-            throw new NotFoundException(bookDto.toString()+ " is not updated!");
+            throw new NotFoundException("Book is not update!");
         } else {
             return toDto(book);
         }

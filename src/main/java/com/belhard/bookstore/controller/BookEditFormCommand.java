@@ -1,0 +1,21 @@
+package com.belhard.bookstore.controller;
+
+import com.belhard.bookstore.service.BookService;
+import com.belhard.bookstore.service.dto.BookDto;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class BookEditFormCommand implements Command {
+
+    private final BookService service;
+
+    @Override
+    public String execute(HttpServletRequest req) {
+        String idStr = req.getParameter("id");
+        Long id = Long.parseLong(idStr);
+        BookDto book = service.getById(id);
+        req.setAttribute("book", book);
+        return "jsp/book/bookEditForm.jsp";
+    }
+}

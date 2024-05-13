@@ -2,6 +2,8 @@ package com.belhard.bookstore.service.impl;
 
 import com.belhard.bookstore.data.dao.UserDao;
 import com.belhard.bookstore.controller.NotFoundException;
+import com.belhard.bookstore.data.entity.Book;
+import com.belhard.bookstore.data.entity.Role;
 import com.belhard.bookstore.data.entity.User;
 import com.belhard.bookstore.service.UserService;
 import com.belhard.bookstore.service.dto.UserDto;
@@ -48,6 +50,7 @@ public class UserServiceImpl implements UserService {
     private UserDtoLogin toDtoLogin(User user) {
         UserDtoLogin userDtoLogin = new UserDtoLogin();
 
+        userDtoLogin.setId(user.getId());
         userDtoLogin.setLogin(user.getLogin());
         userDtoLogin.setPassword(user.getPassword());
 
@@ -74,6 +77,7 @@ public class UserServiceImpl implements UserService {
         user.setLogin(userDtoLogin.getLogin());
         user.setPassword(userDtoLogin.getPassword());
         user.setEmail(userDtoLogin.getLogin());
+        user.setRole(Role.CUSTOMER);
 
         return user;
     }
@@ -163,7 +167,12 @@ public class UserServiceImpl implements UserService {
             throw new NotFoundException("No valid login" + userDtoLogin.toString() + " is not created!");
         }
         User user = userDao.create(toUser(userDtoLogin));
-        return toDtoLogin(user);
+
+        if (user == null){
+            throw new NotFoundException("User is not create!");
+        } else {
+            return toDtoLogin(user);
+        }
     }
 
 
@@ -174,11 +183,23 @@ public class UserServiceImpl implements UserService {
         String loginToBeUpdate = userDto.getLogin();
         User byLogin = userDao.findByLogin(loginToBeUpdate);
 
-        if (byLogin != null &&  !byLogin.getId().equals(userDto.getId()) ) {
+        if (byLogin != null && !byLogin.getId().equals(userDto.getId())) {
             throw new NotFoundException("No valid login" + userDto.toString() + " is not created!");
         }
+        if (userDto.getPassword() == null) {
+            userDto.setPassword(byLogin.getPassword());
+        }
+
+        if (userDto.getRole() == null) {
+            userDto.setRole(byLogin.getRole());
+        }
+
         User user = userDao.update(toUser(userDto));
-        return toDto(user);
+        if (user == null){
+            throw new NotFoundException("User is not update!");
+        } else {
+            return toDto(user);
+        }
     }
 
     @Override
@@ -210,5 +231,13 @@ public class UserServiceImpl implements UserService {
             throw new NotFoundException("No login!");
         }
         return toDtoLogin(user);
+    }
+
+    @Override
+    public String getPassword(long id) {
+        log.debug("Calling getPassword");
+
+        String password = userDao.findPasswordById(id);
+        return password;
     }
 }

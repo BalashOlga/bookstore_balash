@@ -5,10 +5,11 @@
     <head>
         <meta charset="UTF-8" />
         <title><%=request.getServletContext().getServerInfo() %></title>
-        <link href="bookstore.css" rel="stylesheet" type="text/css" />
+        <link href="css/bookstore.css" rel="stylesheet" type="text/css" />
     </head>
 
     <body>
+        <jsp:include page="../navbar.jsp"/>
         <c:if test="${user != null}">
             <h1>Users Info</h1>
             <table>
@@ -28,6 +29,7 @@
                     <th>${user.email}</th>
                     <th>${user.role.name()}</th>
                     <th><a href="controller?command=users">All users</a></th>
+                    <th><a href="controller?command=user_edit_form&id=${user.id}">Edit user</a></th>
                 </tr>
             </table>
         </c:if>

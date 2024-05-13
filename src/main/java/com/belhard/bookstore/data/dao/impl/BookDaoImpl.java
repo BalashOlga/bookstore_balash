@@ -18,8 +18,8 @@ public class BookDaoImpl implements BookDao {
     private static final String FIND_BY_ISBN = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.isbn = ?";
     private static final String FIND_BY_AUTHOR = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.author = ?";
     private static final String FIND_ALL = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE 1 = ?";
-    public static final String CREATE = "INSERT INTO books (author, isbn, year,  cost, covertype)  SELECT ?, ?, ?, ?, covertype.id FROM covertype WHERE covertype.name = ?);";
-    public static final String UPDATE = "UPDATE books SET author = ?, isbn = ?, year = ?,  cost = ?, covertype = (select covertypes.id from covertypes where covertypes.name = ?) WHERE books.id = ?;";
+    public static final String CREATE = "INSERT INTO books (author, isbn, year, cost, covertypes_id)  SELECT ?, ?, ?, ?, covertypes.id FROM covertypes WHERE covertypes.name = ?;";
+    public static final String UPDATE = "UPDATE books SET author = ?, isbn = ?, year = ?,  cost = ?, covertypes_id = (select covertypes.id from covertypes where covertypes.name = ?) WHERE books.id = ?;";
     public static final String DELETE = "DELETE FROM books WHERE books.id = ?";
     public static final String COUNT_ALL = "SELECT count(*) FROM books WHERE 1 = ?;";
     private final ConnectionManager connectionManager;
@@ -170,27 +170,32 @@ public class BookDaoImpl implements BookDao {
     public Book create(Book book) {
         try (Connection connection = connectionManager.getConnection()) {
             log.info("Connection get successfully");
-
+            System.out.println("111");
             PreparedStatement praparestatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             praparestatement.setString(1, book.getAuthor());
             praparestatement.setString(2, book.getIsbn());
             praparestatement.setInt(3, book.getYear());
             praparestatement.setBigDecimal(4, book.getCost());
             praparestatement.setString(5, CoverType.HARD.name());
-
+            System.out.println("222");
             praparestatement.executeUpdate();
-
+            System.out.println("333" + book.toString());
+            book.toString();
             ResultSet resultSet = praparestatement.getGeneratedKeys();
+            System.out.println("444");
 
             if (resultSet.next()) {
+
                 long id = resultSet.getLong(1);
+                System.out.println("id= " + id);
                 log.debug("Update CREATE has been completed");
                 return findById(id);
             } else {
                 throw new RuntimeException("Everything is bad");
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(book.toString(), e);
         }
     }

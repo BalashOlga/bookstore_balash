@@ -23,4 +23,6 @@ public interface UserDao {
     boolean delete(long id);
 
     long countAll();
+
+    String findPasswordById(long id);
 }

@@ -56,13 +56,24 @@ public class CommandFactory {
         BookService bookService = new BookServiceImpl(bookDao);
         UserService userService = new UserServiceImpl(userDao);
 
-        // book
+        //book
+        commands.put("book_edit", new BookEditCommand(bookService));
+        commands.put("book_edit_form", new BookEditFormCommand(bookService));
+        commands.put("book_create", new BookCreateCommand(bookService));
+        commands.put("book_create_form", new BookCreateFormCommand());
         commands.put("book", new BookCommand(bookService));
         commands.put("books", new BooksCommand(bookService));
 
         // user
+        commands.put("user_edit_form", new UserEditFormCommand(userService));
+        commands.put("user_edit", new UserEditCommand(userService));
+        commands.put("user_create_form", new UserCreateFormCommand());
+        commands.put("user_create", new UserCreateCommand(userService));
         commands.put("user", new UserCommand(userService));
         commands.put("users", new UsersCommand(userService));
+
+        // home
+        commands.put("home", new HomeCommand());
     }
 
     public Command getCommand(String command){
