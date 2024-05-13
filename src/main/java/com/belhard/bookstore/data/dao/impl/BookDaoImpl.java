@@ -5,13 +5,13 @@ import com.belhard.bookstore.data.dao.BookDao;
 import com.belhard.bookstore.data.entity.Book;
 import com.belhard.bookstore.data.entity.CoverType;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Log4j2
+@Slf4j
 @RequiredArgsConstructor
 public class BookDaoImpl implements BookDao {
     private static final String FIND_BY_ID = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.id = ?;";
@@ -170,19 +170,14 @@ public class BookDaoImpl implements BookDao {
     public Book create(Book book) {
         try (Connection connection = connectionManager.getConnection()) {
             log.info("Connection get successfully");
-            System.out.println("111");
             PreparedStatement praparestatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             praparestatement.setString(1, book.getAuthor());
             praparestatement.setString(2, book.getIsbn());
             praparestatement.setInt(3, book.getYear());
             praparestatement.setBigDecimal(4, book.getCost());
             praparestatement.setString(5, CoverType.HARD.name());
-            System.out.println("222");
             praparestatement.executeUpdate();
-            System.out.println("333" + book.toString());
-            book.toString();
             ResultSet resultSet = praparestatement.getGeneratedKeys();
-            System.out.println("444");
 
             if (resultSet.next()) {
 
@@ -195,7 +190,6 @@ public class BookDaoImpl implements BookDao {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(book.toString(), e);
         }
     }

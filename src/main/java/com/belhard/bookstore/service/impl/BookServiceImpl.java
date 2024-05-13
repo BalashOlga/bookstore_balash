@@ -1,19 +1,17 @@
 package com.belhard.bookstore.service.impl;
 
+import com.belhard.bookstore.controller.NotFoundException;
 import com.belhard.bookstore.data.dao.BookDao;
 import com.belhard.bookstore.data.entity.Book;
-import com.belhard.bookstore.controller.NotFoundException;
-import com.belhard.bookstore.data.entity.User;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.dto.BookDto;
-import com.belhard.bookstore.service.dto.UserDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Log4j2
+@Slf4j
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 //    private static final Logger log = LogManager.getFormatterLogger(BookServiceImpl.class);

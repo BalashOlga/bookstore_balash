@@ -1,6 +1,6 @@
 package com.belhard.bookstore.connection;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ import java.util.Queue;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
-@Log4j2
+@Slf4j
 public class ConnectionPool {
     private int poolsize;
     private BlockingDeque<ProxyConnection> freeConnections;

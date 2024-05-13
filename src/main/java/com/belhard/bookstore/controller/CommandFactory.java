@@ -11,7 +11,7 @@ import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.UserService;
 import com.belhard.bookstore.service.impl.BookServiceImpl;
 import com.belhard.bookstore.service.impl.UserServiceImpl;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Log4j2
+@Slf4j
 public class CommandFactory {
     private static final CommandFactory INSTANCE = new CommandFactory();
     private static final String DB_URL_KEY = "db.url";
