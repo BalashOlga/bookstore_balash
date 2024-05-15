@@ -58,6 +58,7 @@ public class CommandFactory {
         UserService userService = new UserServiceImpl(userDao);
 
         //book
+        commands.put("book_delete", new BookDeleteCommand(bookService));
         commands.put("book_edit", new BookEditCommand(bookService));
         commands.put("book_edit_form", new BookEditFormCommand(bookService));
         commands.put("book_create", new BookCreateCommand(bookService));
@@ -66,6 +67,7 @@ public class CommandFactory {
         commands.put("books", new BooksCommand(bookService));
 
         // user
+        commands.put("user_delete", new UserDeleteCommand(userService));
         commands.put("user_edit_form", new UserEditFormCommand(userService));
         commands.put("user_edit", new UserEditCommand(userService));
         commands.put("user_create_form", new UserCreateFormCommand());

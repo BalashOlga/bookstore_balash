@@ -31,6 +31,7 @@
                         <th>${book.cost}</th>
                         <th><a href="controller?command=book&id=${book.id}">Books info</a></th>
                         <th><a href="controller?command=book_edit_form&id=${book.id}">Edit book</a></th>
+                        <th><a href="controller?command=book_delete&id=${book.id}">Delete book</a></th>
                     </tr>
                 </c:forEach>
             </table>

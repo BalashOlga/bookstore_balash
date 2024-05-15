@@ -163,7 +163,7 @@ public class UserServiceImpl implements UserService {
         User byLogin = userDao.findByLogin(loginToBeSaved);
 
         if (byLogin != null) {
-            throw new NotFoundException("No valid login" + userDtoLogin.toString() + " is not created!");
+            throw new NotFoundException("No valid login" + userDtoLogin.getLogin() + "! User is not created!");
         }
         User user = userDao.create(toUser(userDtoLogin));
 
@@ -183,7 +183,7 @@ public class UserServiceImpl implements UserService {
         User byLogin = userDao.findByLogin(loginToBeUpdate);
 
         if (byLogin != null && !byLogin.getId().equals(userDto.getId())) {
-            throw new NotFoundException("No valid login" + userDto.toString() + " is not created!");
+            throw new NotFoundException("No valid login" + userDto.getLogin() + "! Book is not updated!");
         }
         if (userDto.getPassword() == null) {
             userDto.setPassword(byLogin.getPassword());
@@ -205,7 +205,7 @@ public class UserServiceImpl implements UserService {
     public void delete(long id) {
         log.debug("Calling delete");
 
-        if (userDao.delete(id)) {
+        if (!userDao.delete(id)) {
             throw new NotFoundException("Deletion error by id = " + id + "!");
         }
     }

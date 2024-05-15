@@ -14,14 +14,14 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class BookDaoImpl implements BookDao {
-    private static final String FIND_BY_ID = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.id = ?;";
-    private static final String FIND_BY_ISBN = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.isbn = ?";
-    private static final String FIND_BY_AUTHOR = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.author = ?";
-    private static final String FIND_ALL = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE 1 = ?";
-    public static final String CREATE = "INSERT INTO books (author, isbn, year, cost, covertypes_id)  SELECT ?, ?, ?, ?, covertypes.id FROM covertypes WHERE covertypes.name = ?;";
-    public static final String UPDATE = "UPDATE books SET author = ?, isbn = ?, year = ?,  cost = ?, covertypes_id = (select covertypes.id from covertypes where covertypes.name = ?) WHERE books.id = ?;";
-    public static final String DELETE = "DELETE FROM books WHERE books.id = ?";
-    public static final String COUNT_ALL = "SELECT count(*) FROM books WHERE 1 = ?;";
+    private static final String FIND_BY_ID = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.id = ?  and books.deleted = false;";
+    private static final String FIND_BY_ISBN = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.isbn = ? and books.deleted = false;";
+    private static final String FIND_BY_AUTHOR = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.author = ? and books.deleted = false;";
+    private static final String FIND_ALL = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE 1 = ? and books.deleted = false;";
+    public static final String CREATE = "INSERT INTO books (author, isbn, year, cost, covertypes_id, deleted)  SELECT ?, ?, ?, ?, covertypes.id, false FROM covertypes WHERE covertypes.name = ?;";
+    public static final String UPDATE = "UPDATE books SET author = ?, isbn = ?, year = ?,  cost = ?, covertypes_id = (select covertypes.id from covertypes where covertypes.name = ?) WHERE books.id = ? and books.deleted = false;";
+    public static final String DELETE = "UPDATE books SET deleted = true WHERE books.id = ? and books.deleted = false;";
+    public static final String COUNT_ALL = "SELECT count(*) FROM books WHERE 1 = ? and books.deleted = false;";
     private final ConnectionManager connectionManager;
 
     private ResultSet getResultSet(String sql, String value) {

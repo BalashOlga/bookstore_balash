@@ -109,7 +109,7 @@ public class BookServiceImpl implements BookService {
         Book byIsbn = bookDao.findByIsbn(isbnToBeCreate);
 
         if (byIsbn != null) {
-            throw new NotFoundException("No valid isbn" + bookDto.toString() + " is not created!");
+            throw new NotFoundException("No valid isbn" + bookDto.getIsbn() + "! Book is not created!");
         }
 
         Book book = bookDao.create(toBook(bookDto));
@@ -129,7 +129,7 @@ public class BookServiceImpl implements BookService {
         Book byIsbn = bookDao.findByIsbn(isbnToBeUpdated);
 
         if (byIsbn != null && !byIsbn.getId().equals(bookDto.getId())) {
-            throw new NotFoundException("No valid isbn" + bookDto.toString() + " is not created!");
+            throw new NotFoundException("No valid isbn" + bookDto.getIsbn() + "! Book  is not updated!");
         }
 
         if (bookDto.getAuthor() == null) {

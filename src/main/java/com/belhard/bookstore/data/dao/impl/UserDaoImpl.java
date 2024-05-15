@@ -14,16 +14,16 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
-    private static final String FIND_BY_ID = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.id = ?";
-    private static final String FIND_BY_EMAIL = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.email = ?";
-    private static final String FIND_BY_LAST_NAME = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.last_name  = ?";
-    private static final String FIND_BY_LOGIN = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role  FROM users JOIN roles ON users.roles_id= roles.id WHERE users.login = ?";
-    private static final String FIND_ALL = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE 1 = ?";
-    private static final String CREATE = "INSERT INTO users (login, password, first_name, last_name, email, roles_id) SELECT ?, ?, ?, ?, ?, roles.id FROM roles WHERE roles.name = ?;";
-    private static final String UPDATE = "UPDATE users SET login = ?, password = ?, first_name = ?,  last_name = ?, email = ?, roles_id = (select roles.id FROM roles WHERE roles.name = ?)  WHERE users.id = ?;";
-    private static final String DELETE = "DELETE FROM users WHERE users.id = ?";
-    private static final String COUNT_ALL = "SELECT count(*) FROM users WHERE 1 = ?;";
-    private static final String FIND_PASSWORD_BY_ID = "SELECT password FROM users WHERE 1 = ?;";
+    private static final String FIND_BY_ID = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.id = ? and users.deleted = false;";
+    private static final String FIND_BY_EMAIL = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.email = ? and users.deleted = false;";
+    private static final String FIND_BY_LAST_NAME = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.last_name  = ? and users.deleted = false;";
+    private static final String FIND_BY_LOGIN = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role  FROM users JOIN roles ON users.roles_id= roles.id WHERE users.login = ? and users.deleted = false;";
+    private static final String FIND_ALL = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE 1 = ? and users.deleted = false;";
+    private static final String CREATE = "INSERT INTO users (login, password, first_name, last_name, email, roles_id, deleted) SELECT ?, ?, ?, ?, ?, roles.id, false FROM roles WHERE roles.name = ?;";
+    private static final String UPDATE = "UPDATE users SET login = ?, password = ?, first_name = ?,  last_name = ?, email = ?, roles_id = (select roles.id FROM roles WHERE roles.name = ?)  WHERE users.id = ? and users.deleted = false;";
+    private static final String DELETE = "UPDATE users SET deleted = true WHERE users.id = ? and users.deleted = false;";
+    private static final String COUNT_ALL = "SELECT count(*) FROM users WHERE 1 = ? and users.deleted = false;";
+    private static final String FIND_PASSWORD_BY_ID = "SELECT password FROM users WHERE 1 = ? and users.deleted = false;";
     private final ConnectionManager connectionManager;
 
     private ResultSet getResultSet(String sql, String value) {

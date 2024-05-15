@@ -27,6 +27,7 @@
                         <th>${user.role.name()}</th>
                         <th><a href="controller?command=user&id=${user.id}">Users info</a></th>
                         <th><a href="controller?command=user_edit_form&id=${user.id}">Edit user</a></th>
+                        <th><a href="controller?command=user_delete&id=${user.id}">Delete user</a></th>
                     </tr>
                 </c:forEach>
             </table>
