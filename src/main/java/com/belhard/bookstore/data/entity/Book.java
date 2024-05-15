@@ -11,6 +11,6 @@ public class Book {
     private String isbn;
     private Integer year;
     private BigDecimal cost;
-    private CoverType cover;
+    private CoverType coverType;
 }
 

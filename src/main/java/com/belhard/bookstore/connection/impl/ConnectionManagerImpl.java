@@ -4,13 +4,13 @@ import com.belhard.bookstore.connection.ConnectionManager;
 import com.belhard.bookstore.connection.ConnectionPool;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.sql.Connection;
 
 
-@Log4j2
+@Slf4j
 @RequiredArgsConstructor()
 public class ConnectionManagerImpl implements ConnectionManager {
     private ConnectionPool connectionPool;

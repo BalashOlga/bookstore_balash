@@ -5,23 +5,23 @@ import com.belhard.bookstore.data.dao.BookDao;
 import com.belhard.bookstore.data.entity.Book;
 import com.belhard.bookstore.data.entity.CoverType;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Log4j2
+@Slf4j
 @RequiredArgsConstructor
 public class BookDaoImpl implements BookDao {
-    private static final String FIND_BY_ID = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.id = ?;";
-    private static final String FIND_BY_ISBN = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.isbn = ?";
-    private static final String FIND_BY_AUTHOR = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.author = ?";
-    private static final String FIND_ALL = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE 1 = ?";
-    public static final String CREATE = "INSERT INTO books (author, isbn, year,  cost, covertype)  SELECT ?, ?, ?, ?, covertype.id FROM covertype WHERE covertype.name = ?);";
-    public static final String UPDATE = "UPDATE books SET author = ?, isbn = ?, year = ?,  cost = ?, covertype = (select covertypes.id from covertypes where covertypes.name = ?) WHERE books.id = ?;";
-    public static final String DELETE = "DELETE FROM books WHERE books.id = ?";
-    public static final String COUNT_ALL = "SELECT count(*) FROM books WHERE 1 = ?;";
+    private static final String FIND_BY_ID = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.id = ?  and books.deleted = false;";
+    private static final String FIND_BY_ISBN = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.isbn = ? and books.deleted = false;";
+    private static final String FIND_BY_AUTHOR = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE books.author = ? and books.deleted = false;";
+    private static final String FIND_ALL = "SELECT books.id, books.author, books.isbn, books.year, books.cost, covertypes.name covertype  FROM books JOIN covertypes ON covertypes.id = books.covertypes_id WHERE 1 = ? and books.deleted = false;";
+    public static final String CREATE = "INSERT INTO books (author, isbn, year, cost, covertypes_id, deleted)  SELECT ?, ?, ?, ?, covertypes.id, false FROM covertypes WHERE covertypes.name = ?;";
+    public static final String UPDATE = "UPDATE books SET author = ?, isbn = ?, year = ?,  cost = ?, covertypes_id = (select covertypes.id from covertypes where covertypes.name = ?) WHERE books.id = ? and books.deleted = false;";
+    public static final String DELETE = "UPDATE books SET deleted = true WHERE books.id = ? and books.deleted = false;";
+    public static final String COUNT_ALL = "SELECT count(*) FROM books WHERE 1 = ? and books.deleted = false;";
     private final ConnectionManager connectionManager;
 
     private ResultSet getResultSet(String sql, String value) {
@@ -65,7 +65,7 @@ public class BookDaoImpl implements BookDao {
                 book.setIsbn(books.getString("isbn"));
                 book.setYear(books.getInt("year"));
                 book.setCost(books.getBigDecimal("cost"));
-                book.setCover(CoverType.valueOf(books.getString("covertype")));
+                book.setCoverType(CoverType.valueOf(books.getString("covertype")));
                 log.debug(book.toString());
                 return book;
             }
@@ -89,7 +89,7 @@ public class BookDaoImpl implements BookDao {
                 book.setIsbn(books.getString("isbn"));
                 book.setYear(books.getInt("year"));
                 book.setCost(books.getBigDecimal("cost"));
-                book.setCover(CoverType.valueOf(books.getString("covertype")));
+                book.setCoverType(CoverType.valueOf(books.getString("covertype")));
                 log.debug(book.toString());
 
                 return book;
@@ -117,7 +117,7 @@ public class BookDaoImpl implements BookDao {
                 book.setIsbn(books.getString("isbn"));
                 book.setYear(books.getInt("year"));
                 book.setCost(books.getBigDecimal("cost"));
-                book.setCover(CoverType.valueOf(books.getString("covertype")));
+                book.setCoverType(CoverType.valueOf(books.getString("covertype")));
 
                 listBook.add(book);
                 log.debug(book.toString());
@@ -151,7 +151,7 @@ public class BookDaoImpl implements BookDao {
                 book.setIsbn(books.getString("isbn"));
                 book.setYear(books.getInt("year"));
                 book.setCost(books.getBigDecimal("cost"));
-                book.setCover(CoverType.valueOf(books.getString("covertype")));
+                book.setCoverType(CoverType.valueOf(books.getString("covertype")));
 
                 listBook.add(book);
                 log.debug(book.toString());
@@ -170,27 +170,26 @@ public class BookDaoImpl implements BookDao {
     public Book create(Book book) {
         try (Connection connection = connectionManager.getConnection()) {
             log.info("Connection get successfully");
-
             PreparedStatement praparestatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             praparestatement.setString(1, book.getAuthor());
             praparestatement.setString(2, book.getIsbn());
             praparestatement.setInt(3, book.getYear());
             praparestatement.setBigDecimal(4, book.getCost());
             praparestatement.setString(5, CoverType.HARD.name());
-
             praparestatement.executeUpdate();
-
             ResultSet resultSet = praparestatement.getGeneratedKeys();
 
             if (resultSet.next()) {
+
                 long id = resultSet.getLong(1);
+                System.out.println("id= " + id);
                 log.debug("Update CREATE has been completed");
                 return findById(id);
             } else {
                 throw new RuntimeException("Everything is bad");
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new RuntimeException(book.toString(), e);
         }
     }
@@ -205,7 +204,7 @@ public class BookDaoImpl implements BookDao {
             statement.setString(2, book.getIsbn());
             statement.setInt(3, book.getYear());
             statement.setBigDecimal(4, book.getCost());
-            statement.setString(5, book.getCover().name());
+            statement.setString(5, book.getCoverType().name());
             statement.setLong(6, book.getId());
 
             statement.executeUpdate();

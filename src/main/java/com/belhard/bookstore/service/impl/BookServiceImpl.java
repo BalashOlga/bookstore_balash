@@ -1,17 +1,17 @@
 package com.belhard.bookstore.service.impl;
 
+import com.belhard.bookstore.controller.impl.NotFoundException;
 import com.belhard.bookstore.data.dao.BookDao;
 import com.belhard.bookstore.data.entity.Book;
-import com.belhard.bookstore.controller.NotFoundException;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.dto.BookDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Log4j2
+@Slf4j
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 //    private static final Logger log = LogManager.getFormatterLogger(BookServiceImpl.class);
@@ -25,7 +25,7 @@ public class BookServiceImpl implements BookService {
         bookDto.setIsbn(book.getIsbn());
         bookDto.setYear(book.getYear());
         bookDto.setCost(book.getCost());
-
+        bookDto.setCoverType(book.getCoverType());
         return bookDto;
     }
 
@@ -37,6 +37,7 @@ public class BookServiceImpl implements BookService {
         book.setIsbn(bookDto.getIsbn());
         book.setYear(bookDto.getYear());
         book.setCost(bookDto.getCost());
+        book.setCoverType(bookDto.getCoverType());
 
         return book;
     }
@@ -104,10 +105,17 @@ public class BookServiceImpl implements BookService {
     public BookDto create(BookDto bookDto) {
         log.debug("Calling create");
 
+        String isbnToBeCreate = bookDto.getIsbn();
+        Book byIsbn = bookDao.findByIsbn(isbnToBeCreate);
+
+        if (byIsbn != null) {
+            throw new NotFoundException("No valid isbn" + bookDto.getIsbn() + "! Book is not created!");
+        }
+
         Book book = bookDao.create(toBook(bookDto));
 
         if (book == null){
-            throw new NotFoundException(bookDto.toString()+ " is not created!");
+            throw new NotFoundException("Book is not create!");
         } else {
             return toDto(book);
         }
@@ -117,10 +125,31 @@ public class BookServiceImpl implements BookService {
     public BookDto update(BookDto bookDto) {
         log.debug("Calling update");
 
-        Book book = bookDao.update(toBook(bookDto));
+        String isbnToBeUpdated = bookDto.getIsbn();
+        Book byIsbn = bookDao.findByIsbn(isbnToBeUpdated);
 
+        if (byIsbn != null && !byIsbn.getId().equals(bookDto.getId())) {
+            throw new NotFoundException("No valid isbn" + bookDto.getIsbn() + "! Book  is not updated!");
+        }
+
+        if (bookDto.getAuthor() == null) {
+            bookDto.setAuthor(byIsbn.getAuthor());
+        }
+        if (bookDto.getYear() == null) {
+            bookDto.setYear(byIsbn.getYear());
+        }
+
+        if (bookDto.getCost() == null) {
+            bookDto.setCost(byIsbn.getCost());
+        }
+
+        if (bookDto.getCoverType() == null) {
+            bookDto.setCoverType(byIsbn.getCoverType());
+        }
+
+        Book book = bookDao.update(toBook(bookDto));
         if (book == null){
-            throw new NotFoundException(bookDto.toString()+ " is not updated!");
+            throw new NotFoundException("Book is not update!");
         } else {
             return toDto(book);
         }

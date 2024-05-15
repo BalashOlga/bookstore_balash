@@ -1,23 +1,23 @@
-package com.belhard.bookstore.controller;
+package com.belhard.bookstore.controller.impl;
 
+import com.belhard.bookstore.controller.Command;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.dto.BookDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @RequiredArgsConstructor
-public class BookCommand implements  Command {
-
+public class BookDeleteCommand implements Command {
     private final BookService service;
 
     @Override
     public String execute(HttpServletRequest req) {
         String idStr = req.getParameter("id");
         Long id = Long.parseLong(idStr);
-        BookDto bookDto = service.getById(id);
-        return ("<h1>Book</h1><p>" + bookDto.getId() + "</p><p>" + bookDto.getAuthor() + "</p>");
+
+        BookDto forDelete = service.getById(id);
+        service.delete(id);
+        req.setAttribute("book", forDelete);
+        return "jsp/book/bookDelete.jsp";
     }
 }
-

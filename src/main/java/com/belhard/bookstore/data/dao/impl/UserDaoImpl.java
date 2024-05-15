@@ -5,24 +5,25 @@ import com.belhard.bookstore.data.dao.UserDao;
 import com.belhard.bookstore.data.entity.Role;
 import com.belhard.bookstore.data.entity.User;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Log4j2
+@Slf4j
 @RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
-    private static final String FIND_BY_ID = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.id = ?";
-    private static final String FIND_BY_EMAIL = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.email = ?";
-    private static final String FIND_BY_LAST_NAME = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.last_name  = ?";
-    private static final String FIND_BY_LOGIN = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role  FROM users JOIN roles ON users.roles_id= roles.id WHERE users.login = ?";
-    private static final String FIND_ALL = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE 1 = ?";
-    private static final String CREATE = "INSERT INTO users (login, password, first_name, last_name, email, role) SELECT ?, ?, ?, ?, ?, roles.id role FROM roles WHERE roles.name = ?)";
-    private static final String UPDATE = "UPDATE users SET login = ?, password = ?, first_name = ?,  last_name = ?, email = ?, role = (select roles.id FROM roles WHERE roles.name = ?)  WHERE users.id = ?;";
-    private static final String DELETE = "DELETE FROM users WHERE users.id = ?";
-    private static final String COUNT_ALL = "SELECT count(*) FROM users WHERE 1 = ?;";
+    private static final String FIND_BY_ID = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.id = ? and users.deleted = false;";
+    private static final String FIND_BY_EMAIL = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.email = ? and users.deleted = false;";
+    private static final String FIND_BY_LAST_NAME = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE users.last_name  = ? and users.deleted = false;";
+    private static final String FIND_BY_LOGIN = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role  FROM users JOIN roles ON users.roles_id= roles.id WHERE users.login = ? and users.deleted = false;";
+    private static final String FIND_ALL = "SELECT users.id, users.login, users.password, users.first_name, users.last_name, users.email, roles.name role FROM users JOIN roles ON users.roles_id = roles.id WHERE 1 = ? and users.deleted = false;";
+    private static final String CREATE = "INSERT INTO users (login, password, first_name, last_name, email, roles_id, deleted) SELECT ?, ?, ?, ?, ?, roles.id, false FROM roles WHERE roles.name = ?;";
+    private static final String UPDATE = "UPDATE users SET login = ?, password = ?, first_name = ?,  last_name = ?, email = ?, roles_id = (select roles.id FROM roles WHERE roles.name = ?)  WHERE users.id = ? and users.deleted = false;";
+    private static final String DELETE = "UPDATE users SET deleted = true WHERE users.id = ? and users.deleted = false;";
+    private static final String COUNT_ALL = "SELECT count(*) FROM users WHERE 1 = ? and users.deleted = false;";
+    private static final String FIND_PASSWORD_BY_ID = "SELECT password FROM users WHERE 1 = ? and users.deleted = false;";
     private final ConnectionManager connectionManager;
 
     private ResultSet getResultSet(String sql, String value) {
@@ -206,6 +207,7 @@ public class UserDaoImpl implements UserDao {
     public User create(User user) {
         try (Connection connection = connectionManager.getConnection()) {
             log.info("Connection get successfully");
+            log.debug("create.."+ user.toString());
 
             PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getLogin());
@@ -221,14 +223,14 @@ public class UserDaoImpl implements UserDao {
 
             if (resultSet.next()) {
                 long id = resultSet.getLong(1);
-                log.debug("Update CREATE has been completed");
+                log.debug("CREATE has been completed");
                 return findById(id);
             } else {
                 throw new RuntimeException("Everything is bad");
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("UserDaoImpl:  public User create(User user)");
+            throw new RuntimeException(user.toString(), e);
         }
     }
 
@@ -289,6 +291,24 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public String findPasswordById(long id) {
+        try {
+            ResultSet users = getResultSet(FIND_PASSWORD_BY_ID, id);
+
+            if (users.next()) {
+                String password = users.getString("password");
+                log.debug("The password has been received from DB ");
+                return password;
+            }
+            log.debug("Select FIND_PASSWORD_BY_ID has been completed");
+            return null;
+
+        } catch (Exception e) {
+            throw new RuntimeException("id = " + id);
+        }
+    }
+
+    @Override
     public List<User> findByLastName(String lastName) {
         try {
             ResultSet users = getResultSet(FIND_BY_LAST_NAME, lastName);
@@ -321,5 +341,6 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception e) {
             throw new RuntimeException("lastName = " + lastName, e);
         }
+
     }
 }
