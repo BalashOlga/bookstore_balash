@@ -1,5 +1,6 @@
-package com.belhard.bookstore.controller;
+package com.belhard.bookstore.controller.impl;
 
+import com.belhard.bookstore.controller.Command;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.dto.BookDto;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-public class BookCommand implements  Command {
+public class BookCommand implements Command {
 
     private final BookService service;
 

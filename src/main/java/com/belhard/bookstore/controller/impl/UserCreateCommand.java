@@ -1,12 +1,13 @@
-package com.belhard.bookstore.controller;
+package com.belhard.bookstore.controller.impl;
 
+import com.belhard.bookstore.controller.Command;
 import com.belhard.bookstore.service.UserService;
 import com.belhard.bookstore.service.dto.UserDtoLogin;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class UserCreateCommand implements Command{
+public class UserCreateCommand implements Command {
     private final UserService service;
 
     @Override

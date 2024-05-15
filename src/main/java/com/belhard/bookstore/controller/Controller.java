@@ -1,5 +1,6 @@
 package com.belhard.bookstore.controller;
 
+import com.belhard.bookstore.controller.impl.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -26,6 +27,7 @@ public class Controller extends HttpServlet {
     private void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         try {
             String command = req.getParameter("command");
+            CommandFactory commandFactory = AppListner.getCommandFactory();
             Command commandInstance = commandFactory.getCommand(command);
             String page = commandInstance.execute(req);
             req.getRequestDispatcher(page).forward(req,resp);
@@ -50,18 +52,5 @@ public class Controller extends HttpServlet {
             out.println("<h1>Error</h1>");
             out.println("<p> The disaster on the swing </p>");
         }
-    }
-
-    @Override
-    public void destroy() {
-        if (commandFactory != null) {
-            commandFactory.shutdown();
-        }
-    }
-
-    @Override
-    public void init() throws ServletException {
-        commandFactory = CommandFactory.getInstance();
-        log.info("Сontroller is running");
     }
 }

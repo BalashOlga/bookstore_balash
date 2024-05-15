@@ -1,14 +1,15 @@
-package com.belhard.bookstore.controller;
+package com.belhard.bookstore.controller.impl;
 
+import com.belhard.bookstore.controller.Command;
 import com.belhard.bookstore.service.UserService;
-import com.belhard.bookstore.service.dto.UserDto;
-import com.belhard.bookstore.service.dto.UserDtoLogin;
 import com.belhard.bookstore.service.dto.UserDtoWithoutPassword;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
-public class UserEditFormCommand implements Command {
+public class UserCommand implements Command {
     private final UserService service;
 
     @Override
@@ -17,7 +18,7 @@ public class UserEditFormCommand implements Command {
         Long id = Long.parseLong(idStr);
         UserDtoWithoutPassword user = service.getById(id);
         req.setAttribute("user", user);
-        return "jsp/user/userEdit.jsp";
+        return "jsp/user/user.jsp";
     }
-
 }
+
